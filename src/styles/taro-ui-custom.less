@@ -1,0 +1,109 @@
+// Taro UI 自定义Less样式
+@import '../app.less';
+
+// 覆盖Taro UI的默认样式
+.at-button {
+  &--primary {
+    background-color: @primary-color;
+    border-color: @primary-color;
+  }
+  
+  &--secondary {
+    background-color: transparent;
+    border-color: @primary-color;
+    color: @primary-color;
+  }
+}
+
+.at-input {
+  &__input {
+    background-color: @white;
+    border: 1px solid @border-color;
+    border-radius: @border-radius;
+  }
+  
+  &__input:focus {
+    border-color: @primary-color;
+  }
+}
+
+.at-list {
+  background-color: @white;
+  
+  &__item {
+    border-bottom: 1px solid @border-color;
+  }
+}
+
+.at-card {
+  background-color: @white;
+  border-radius: @border-radius;
+  box-shadow: @shadow;
+  margin: 10px;
+}
+
+.at-tag {
+  background-color: @primary-color-light;
+  color: @primary-color;
+  border-radius: 4px;
+  
+  &--primary {
+    background-color: @primary-color;
+    color: @white;
+  }
+}
+
+.at-tabs {
+  &__header {
+    background-color: @white;
+    border-bottom: 1px solid @border-color;
+  }
+  
+  &__item {
+    color: @text-color-light;
+    
+    &--active {
+      color: @primary-color;
+    }
+  }
+  
+  &__underline {
+    background-color: @primary-color;
+  }
+}
+
+.at-navbar {
+  background-color: @primary-color;
+  color: @white;
+}
+
+.at-search-bar {
+  &__input-cnt {
+    background-color: @background-color;
+    border-radius: @border-radius;
+  }
+}
+
+.at-modal {
+  &__content {
+    border-radius: @border-radius;
+  }
+  
+  &__btn-group {
+    .at-modal__btn {
+      &--primary {
+        color: @primary-color;
+      }
+    }
+  }
+}
+
+.at-toast {
+  border-radius: @border-radius;
+}
+
+.at-loading {
+  &__ring {
+    border-color: @primary-color;
+  }
+} 

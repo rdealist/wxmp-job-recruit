@@ -1,0 +1,212 @@
+.job-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  margin: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(102, 151, 245, 0.08);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(102, 151, 245, 0.12);
+  }
+
+  // 锁定遮罩
+  &__lock-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  &__lock-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+
+  &__lock-text {
+    font-size: 16px;
+    color: #6697f5;
+    font-weight: 500;
+  }
+
+  // 卡片头部
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  &__title-section {
+    flex: 1;
+    margin-right: 16px;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  &__salary {
+    font-size: 18px;
+    font-weight: 600;
+    color: #6697f5;
+    display: block;
+  }
+
+  &__time {
+    flex-shrink: 0;
+  }
+
+  &__time-text {
+    font-size: 14px;
+    color: #999999;
+    background: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+
+  // 公司信息
+  &__company {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  &__company-name {
+    font-size: 16px;
+    color: #333333;
+    font-weight: 500;
+    margin-right: 16px;
+  }
+
+  &__location {
+    font-size: 14px;
+    color: #666666;
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  // 职位要求
+  &__requirements {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  &__experience,
+  &__education {
+    font-size: 14px;
+    color: #666666;
+    background: #e6f7ff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-right: 8px;
+  }
+
+  // 技能标签
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  &__tag {
+    background: #f0f9ff;
+    border: 1px solid #b3d8ff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    margin: 4px 8px 4px 0;
+
+    &--more {
+      background: #f5f5f5;
+      border-color: #d9d9d9;
+    }
+  }
+
+  &__tag-text {
+    font-size: 12px;
+    color: #6697f5;
+
+    .job-card__tag--more & {
+      color: #999999;
+    }
+  }
+
+  // 联系信息
+  &__contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8faff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+
+  &__contact-name {
+    font-size: 16px;
+    color: #333333;
+    font-weight: 500;
+  }
+
+  &__contact-phone {
+    font-size: 16px;
+    color: #6697f5;
+    font-weight: 500;
+  }
+
+  // 职位描述
+  &__description {
+    margin-bottom: 16px;
+  }
+
+  &__description-text {
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.6;
+  }
+
+  // 今日标识
+  &__today-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #6697f5, #4facfe);
+    padding: 6px 12px;
+    border-radius: 20px;
+    z-index: 5;
+  }
+
+  &__today-text {
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 500;
+  }
+}
+
+// 锁定状态的卡片
+.job-card--locked {
+  .job-card__title,
+  .job-card__salary,
+  .job-card__company-name,
+  .job-card__description-text {
+    filter: blur(4px);
+  }
+}
