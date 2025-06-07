@@ -6,7 +6,7 @@
  * @updated 2024-12-05
  */
 
-import React, { createContext, useContext, useReducer, useEffect } from 'react'
+import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react'
 import Taro from '@tarojs/taro'
 
 // 导入模块化的功能组件
@@ -216,9 +216,9 @@ export const JobProvider = ({ children }) => {
 
   /**
    * Action 创建函数集合
-   * @description 提供给组件使用的状态操作函数
+   * @description 提供给组件使用的状态操作函数，使用 useCallback 防止不必要的重新渲染
    */
-  const actions = {
+  const actions = useMemo(() => ({
     /**
      * 设置筛选条件
      * @param {Object} filters - 新的筛选条件
@@ -287,57 +287,61 @@ export const JobProvider = ({ children }) => {
     updateUserInfo: (updates) => {
       dispatch({ type: ACTIONS.UPDATE_USER_INFO, payload: updates })
     }
-  }
+  }), [dispatch])
 
   /**
    * 辅助函数集合
-   * @description 提供常用的数据查询和处理函数
+   * @description 提供常用的数据查询和处理函数，使用 useMemo 优化性能
    */
-  const helpers = {
-    /** 获取今日发布的职位 */
-    getTodayJobs: () => jobDataUtils.getTodayJobs(state.jobs),
+  const helpers = useMemo(() => {
+    const helperFunctions = {
+      /** 获取今日发布的职位 */
+      getTodayJobs: () => jobDataUtils.getTodayJobs(state.jobs),
 
-    /** 检查日期是否已解锁 */
-    isDateUnlocked: (date) => userUtils.isDateUnlocked(date, state.unlockedDates),
+      /** 检查日期是否已解锁 */
+      isDateUnlocked: (date) => userUtils.isDateUnlocked(date, state.unlockedDates),
 
-    /** 根据ID查找职位 */
-    getJobById: (id) => jobDataUtils.findJobById(state.jobs, id),
+      /** 根据ID查找职位 */
+      getJobById: (id) => jobDataUtils.findJobById(state.jobs, id),
 
-    /** 获取用户发布的职位 */
-    getUserJobs: () => userUtils.getUserJobs(state.jobs, state.userInfo),
+      /** 获取用户发布的职位 */
+      getUserJobs: () => userUtils.getUserJobs(state.jobs, state.userInfo),
 
-    /** 处理分享解锁 */
-    shareJob: async (jobId) => {
-      const result = await userUtils.handleShareUnlock(
-        jobId,
-        state.jobs,
-        state.unlockedDates
-      )
+      /** 处理分享解锁 */
+      shareJob: async (jobId) => {
+        const result = await userUtils.handleShareUnlock(
+          jobId,
+          state.jobs,
+          state.unlockedDates
+        )
 
-      if (result.success) {
-        dispatch({
-          type: ACTIONS.LOAD_PERSISTED_DATA,
-          payload: { unlockedDates: result.unlockedDates }
-        })
+        if (result.success) {
+          dispatch({
+            type: ACTIONS.LOAD_PERSISTED_DATA,
+            payload: { unlockedDates: result.unlockedDates }
+          })
+        }
+
+        return result.success
       }
+    }
 
-      return result.success
-    },
-
-    /** 获取用户统计信息 */
-    getUserStats: () => userUtils.getUserStats(
+    // 获取用户统计信息需要访问其他helper函数，所以单独定义
+    helperFunctions.getUserStats = () => userUtils.getUserStats(
       state.userInfo,
-      helpers.getUserJobs(),
+      helperFunctions.getUserJobs(),
       state.unlockedDates
     )
-  }
 
-  // 合并状态、操作函数和辅助函数
-  const contextValue = {
+    return helperFunctions
+  }, [state.jobs, state.unlockedDates, state.userInfo, dispatch])
+
+  // 合并状态、操作函数和辅助函数，使用 useMemo 优化性能
+  const contextValue = useMemo(() => ({
     ...state,
     ...actions,
     ...helpers
-  }
+  }), [state, actions, helpers])
 
   return (
     <JobContext.Provider value={contextValue}>

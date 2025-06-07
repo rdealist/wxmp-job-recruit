@@ -41,11 +41,15 @@ const Home = () => {
     }
   })
 
-  // 页面加载时应用筛选
+  // 检查筛选结果是否为空
+  useEffect(() => {
+    setIsEmpty(filteredJobs.length === 0)
+  }, [filteredJobs])
+
+  // 页面初始化时应用筛选（仅执行一次）
   useEffect(() => {
     applyFilters()
-    setIsEmpty(filteredJobs.length === 0)
-  }, [filteredJobs, applyFilters])
+  }, []) // 空依赖数组，仅在组件挂载时执行一次
 
   // 获取今日职位数量
   const todayJobsCount = getTodayJobs().length
