@@ -1,0 +1,403 @@
+/**
+ * 任职要求表单组件样式
+ * 使用 Arco Design Mobile 设计规范
+ */
+
+.requirements-form {
+  padding: 32px 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  margin-bottom: 16px;
+
+  &__header {
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #1d2129;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  &__subtitle {
+    font-size: 28px;
+    color: #86909c;
+    line-height: 1.5;
+    display: block;
+  }
+
+  &__field {
+    margin-bottom: 32px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__label {
+    font-size: 28px;
+    font-weight: 500;
+    color: #1d2129;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  &__label-tip {
+    font-size: 24px;
+    color: #86909c;
+    font-weight: 400;
+    margin-left: 8px;
+  }
+
+  &__picker {
+    height: 88px;
+    padding: 0 24px;
+    background: #f7f8fa;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+
+    &:active {
+      background: #ffffff;
+      border-color: #6697f5;
+    }
+  }
+
+  &__picker-text {
+    font-size: 28px;
+    color: #1d2129;
+    line-height: 1.5;
+  }
+
+  &__picker-placeholder {
+    font-size: 28px;
+    color: #c9cdd4;
+    line-height: 1.5;
+  }
+
+  &__picker-arrow {
+    font-size: 20px;
+    color: #86909c;
+  }
+
+  &__input {
+    flex: 1;
+    height: 88px;
+    padding: 0 24px;
+    font-size: 28px;
+    color: #1d2129;
+    background: #f7f8fa;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: #c9cdd4;
+    }
+
+    &:focus {
+      background: #ffffff;
+      border-color: #6697f5;
+      outline: none;
+    }
+  }
+
+  &__tag-input {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  &__add-btn {
+    height: 88px;
+    padding: 0 32px;
+    background: #6697f5;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:active {
+      background: #4080ff;
+      transform: scale(0.98);
+    }
+
+    &--disabled {
+      background: #c9cdd4;
+      pointer-events: none;
+    }
+  }
+
+  &__add-text {
+    font-size: 28px;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  &__tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #f0f9ff;
+    border: 1px solid #6697f5;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+  }
+
+  &__tag-text {
+    font-size: 24px;
+    color: #6697f5;
+    line-height: 1.5;
+  }
+
+  &__tag-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(102, 151, 245, 0.1);
+    transition: all 0.2s ease;
+
+    &:active {
+      background: rgba(102, 151, 245, 0.2);
+      transform: scale(0.9);
+    }
+  }
+
+  &__quick-skills {
+    margin-top: 24px;
+    border: 1px solid #e5e6eb;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  &__quick-header {
+    padding: 20px 24px;
+    background: #f7f8fa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+
+    &:active {
+      background: #f2f3f5;
+    }
+  }
+
+  &__quick-title {
+    font-size: 28px;
+    color: #1d2129;
+    font-weight: 500;
+  }
+
+  &__skill-categories {
+    padding: 24px;
+    background: #ffffff;
+  }
+
+  &__skill-category {
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__category-title {
+    font-size: 26px;
+    color: #4e5969;
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  &__category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  &__preset-tag {
+    padding: 8px 16px;
+    background: #f7f8fa;
+    border: 1px solid #e5e6eb;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+
+    &:active {
+      background: #f0f9ff;
+      border-color: #6697f5;
+      transform: scale(0.98);
+    }
+
+    &--selected {
+      background: #f0f9ff;
+      border-color: #6697f5;
+    }
+  }
+
+  &__preset-tag-text {
+    font-size: 24px;
+    color: #4e5969;
+    line-height: 1.5;
+
+    .requirements-form__preset-tag--selected & {
+      color: #6697f5;
+    }
+  }
+
+  &__error {
+    font-size: 24px;
+    color: #f53f3f;
+    line-height: 1.5;
+    margin-top: 8px;
+    display: block;
+  }
+
+  &__tips {
+    margin-top: 32px;
+    padding: 20px;
+    background: #f0f9ff;
+    border-radius: 12px;
+    border-left: 4px solid #6697f5;
+  }
+
+  &__tip-text {
+    font-size: 24px;
+    color: #4e5969;
+    line-height: 1.6;
+    display: block;
+  }
+}
+
+/* 响应式适配 */
+@media (max-width: 750px) {
+  .requirements-form {
+    padding: 24px 16px;
+
+    &__tag-input {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &__category-tags {
+      gap: 8px;
+    }
+
+    &__preset-tag {
+      padding: 6px 12px;
+    }
+  }
+}
+
+/* 暗色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .requirements-form {
+    background: #17171a;
+
+    &__title {
+      color: #f7f8fa;
+    }
+
+    &__subtitle {
+      color: #86909c;
+    }
+
+    &__label {
+      color: #f7f8fa;
+    }
+
+    &__picker {
+      background: #232324;
+
+      &:active {
+        background: #2e2e30;
+        border-color: #6697f5;
+      }
+    }
+
+    &__picker-text {
+      color: #f7f8fa;
+    }
+
+    &__input {
+      background: #232324;
+      color: #f7f8fa;
+
+      &:focus {
+        background: #2e2e30;
+        border-color: #6697f5;
+      }
+    }
+
+    &__quick-header {
+      background: #232324;
+
+      &:active {
+        background: #2e2e30;
+      }
+    }
+
+    &__quick-title {
+      color: #f7f8fa;
+    }
+
+    &__skill-categories {
+      background: #17171a;
+    }
+
+    &__category-title {
+      color: #c9cdd4;
+    }
+
+    &__preset-tag {
+      background: #232324;
+      border-color: #3c3c3f;
+
+      &:active {
+        background: #2e2e30;
+        border-color: #6697f5;
+      }
+
+      &--selected {
+        background: #1a2332;
+        border-color: #6697f5;
+      }
+    }
+
+    &__preset-tag-text {
+      color: #c9cdd4;
+
+      .requirements-form__preset-tag--selected & {
+        color: #6697f5;
+      }
+    }
+
+    &__tips {
+      background: #1a2332;
+      border-left-color: #6697f5;
+    }
+
+    &__tip-text {
+      color: #c9cdd4;
+    }
+  }
+}
