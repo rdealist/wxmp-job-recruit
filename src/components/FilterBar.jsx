@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, Input } from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import useJobStore from '../stores/jobStore'
 import './FilterBar.less'
@@ -93,31 +94,31 @@ const FilterBar = () => {
           />
           {searchValue && (
             <View className="filter-bar__clear" onClick={handleSearchClear}>
-              <Text className="filter-bar__clear-icon">×</Text>
+              <AtIcon value="close-circle" size="18" color="#9ca3af" />
             </View>
           )}
         </View>
-        <View className="filter-bar__search-btn" onClick={handleSearchConfirm}>
-          <Text className="filter-bar__search-icon">🔍</Text>
+        <View className="arco-btn arco-btn--primary arco-btn--medium filter-bar__search-btn" onClick={handleSearchConfirm}>
+          <AtIcon value="search" size="18" color="#ffffff" />
         </View>
       </View>
 
       {/* 筛选按钮组 */}
       <View className="filter-bar__filters">
         {/* 地区筛选 */}
-        <View 
-          className={`filter-bar__filter-btn ${filters.location ? 'filter-bar__filter-btn--active' : ''}`}
+        <View
+          className={`arco-btn arco-btn--small ${filters.location ? 'arco-btn--primary' : 'arco-btn--outline'} filter-bar__filter-btn ${filters.location ? 'filter-bar__filter-btn--active' : ''}`}
           onClick={handleLocationSelect}
         >
           <Text className="filter-bar__filter-text">
             {getLocationText()}
           </Text>
-          <Text className="filter-bar__filter-arrow">▼</Text>
+          <AtIcon value="chevron-down" size="14" color={filters.location ? "#ffffff" : "#6697f5"} />
         </View>
 
         {/* 重置按钮 */}
         {hasActiveFilters && (
-          <View className="filter-bar__reset" onClick={handleReset}>
+          <View className="arco-btn arco-btn--small arco-btn--text filter-bar__reset" onClick={handleReset}>
             <Text className="filter-bar__reset-text">重置</Text>
           </View>
         )}
@@ -131,12 +132,12 @@ const FilterBar = () => {
               <Text className="filter-bar__active-tag-text">
                 {getLocationText()}
               </Text>
-              <Text 
+              <View
                 className="filter-bar__active-tag-close"
                 onClick={() => setFilters({ location: '', district: '' })}
               >
-                ×
-              </Text>
+                <AtIcon value="close" size="12" color="#ffffff" />
+              </View>
             </View>
           )}
           {filters.keyword && (
@@ -144,12 +145,12 @@ const FilterBar = () => {
               <Text className="filter-bar__active-tag-text">
                 "{filters.keyword}"
               </Text>
-              <Text 
+              <View
                 className="filter-bar__active-tag-close"
                 onClick={() => setFilters({ keyword: '' })}
               >
-                ×
-              </Text>
+                <AtIcon value="close" size="12" color="#ffffff" />
+              </View>
             </View>
           )}
         </View>

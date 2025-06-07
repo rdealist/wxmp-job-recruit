@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图标生成器</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        .icon-container { display: inline-block; margin: 10px; text-align: center; }
+        .download-btn { 
+            display: block; 
+            margin: 5px auto; 
+            padding: 5px 10px; 
+            background: #6697f5; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <h1>TabBar图标生成器</h1>
+    <p>点击下载按钮保存图标到 src/assets/icons/ 目录</p>
+    
+    <div id="icons-container"></div>
+
+    <script>
+        const icons = [
+            { name: 'home', active: false, color: '#9ca3af' },
+            { name: 'home-active', active: true, color: '#6697f5' },
+            { name: 'publish', active: false, color: '#9ca3af' },
+            { name: 'publish-active', active: true, color: '#6697f5' },
+            { name: 'user', active: false, color: '#9ca3af' },
+            { name: 'user-active', active: true, color: '#6697f5' }
+        ];
+
+        function drawHomeIcon(ctx, color, active) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            if (active) {
+                ctx.fillStyle = color + '20';
+                ctx.beginPath();
+                ctx.moveTo(16, 6);
+                ctx.lineTo(8, 14);
+                ctx.lineTo(8, 26);
+                ctx.lineTo(14, 26);
+                ctx.lineTo(14, 20);
+                ctx.lineTo(18, 20);
+                ctx.lineTo(18, 26);
+                ctx.lineTo(24, 26);
+                ctx.lineTo(24, 14);
+                ctx.closePath();
+                ctx.fill();
+            }
+            
+            ctx.beginPath();
+            ctx.moveTo(16, 6);
+            ctx.lineTo(8, 14);
+            ctx.lineTo(8, 26);
+            ctx.lineTo(14, 26);
+            ctx.lineTo(14, 20);
+            ctx.lineTo(18, 20);
+            ctx.lineTo(18, 26);
+            ctx.lineTo(24, 26);
+            ctx.lineTo(24, 14);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function drawPublishIcon(ctx, color, active) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            
+            if (active) {
+                ctx.fillStyle = color + '20';
+                ctx.beginPath();
+                ctx.arc(16, 16, 10, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            ctx.beginPath();
+            ctx.arc(16, 16, 10, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(16, 10);
+            ctx.lineTo(16, 22);
+            ctx.moveTo(10, 16);
+            ctx.lineTo(22, 16);
+            ctx.stroke();
+        }
+
+        function drawUserIcon(ctx, color, active) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            
+            if (active) {
+                ctx.fillStyle = color + '20';
+                ctx.beginPath();
+                ctx.arc(16, 10, 5, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            ctx.beginPath();
+            ctx.arc(16, 10, 5, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.arc(16, 24, 12, -Math.PI, 0);
+            ctx.stroke();
+        }
+
+        function createIcon(iconData) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 32;
+            canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            
+            // 清除画布
+            ctx.clearRect(0, 0, 32, 32);
+            
+            // 绘制图标
+            if (iconData.name.includes('home')) {
+                drawHomeIcon(ctx, iconData.color, iconData.active);
+            } else if (iconData.name.includes('publish')) {
+                drawPublishIcon(ctx, iconData.color, iconData.active);
+            } else if (iconData.name.includes('user')) {
+                drawUserIcon(ctx, iconData.color, iconData.active);
+            }
+            
+            return canvas;
+        }
+
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // 生成所有图标
+        const container = document.getElementById('icons-container');
+        
+        icons.forEach(iconData => {
+            const iconContainer = document.createElement('div');
+            iconContainer.className = 'icon-container';
+            
+            const canvas = createIcon(iconData);
+            const button = document.createElement('button');
+            button.className = 'download-btn';
+            button.textContent = `下载 ${iconData.name}.png`;
+            button.onclick = () => downloadCanvas(canvas, `${iconData.name}.png`);
+            
+            const label = document.createElement('div');
+            label.textContent = iconData.name;
+            
+            iconContainer.appendChild(canvas);
+            iconContainer.appendChild(label);
+            iconContainer.appendChild(button);
+            container.appendChild(iconContainer);
+        });
+    </script>
+</body>
+</html>

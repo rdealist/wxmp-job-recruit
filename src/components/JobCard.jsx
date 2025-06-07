@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text } from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import useJobStore from '../stores/jobStore'
 import './JobCard.less'
@@ -58,7 +59,9 @@ const JobCard = ({ job, showLockStatus = true }) => {
       {/* 锁定状态遮罩 */}
       {!isUnlocked && !isToday && showLockStatus && (
         <View className="job-card__lock-mask">
-          <View className="job-card__lock-icon">🔒</View>
+          <View className="job-card__lock-icon">
+            <AtIcon value="lock" size="32" color="#6697f5" />
+          </View>
           <Text className="job-card__lock-text">分享解锁</Text>
         </View>
       )}

@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Text, Image } from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
+import CustomTabBar from '../../components/CustomTabBar'
 import useJobStore from '../../stores/jobStore'
 import './index.less'
 
@@ -68,7 +70,7 @@ const User = () => {
   }
 
   return (
-    <View className="user">
+    <View className="user page-with-tabbar">
       {/* 用户信息卡片 */}
       <View className="user__profile">
         <View className="user__avatar-section">
@@ -78,7 +80,7 @@ const User = () => {
             mode="aspectFill"
           />
           <View className="user__edit-btn">
-            <Text className="user__edit-icon">✏️</Text>
+            <AtIcon value="edit" size="14" color="#6697f5" />
           </View>
         </View>
         
@@ -157,6 +159,9 @@ const User = () => {
         <Text className="user__version">工程招聘 v1.0.0</Text>
         <Text className="user__copyright">© 2024 All Rights Reserved</Text>
       </View>
+
+      {/* 自定义TabBar */}
+      <CustomTabBar />
     </View>
   )
 }

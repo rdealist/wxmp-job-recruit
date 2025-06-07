@@ -1,0 +1,204 @@
+@import '../../app.less';
+
+.demo {
+  min-height: 100vh;
+  background: linear-gradient(135deg, @background-color 0%, @primary-50 100%);
+  padding-bottom: @spacing-10;
+
+  &__header {
+    background: @gradient-primary;
+    padding: @spacing-10 @spacing-5 @spacing-8;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200%;
+      height: 100px;
+      background: @background-color;
+      border-radius: 50%;
+    }
+  }
+
+  &__title {
+    font-size: @font-size-3xl;
+    color: @surface-color;
+    font-weight: @font-weight-bold;
+    margin-bottom: @spacing-2;
+    display: block;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &__subtitle {
+    font-size: @font-size-base;
+    color: rgba(255, 255, 255, 0.9);
+    display: block;
+    position: relative;
+    z-index: 1;
+    font-weight: @font-weight-medium;
+  }
+
+  &__section {
+    background: linear-gradient(135deg, @surface-color 0%, @primary-50 100%);
+    border-radius: @radius-xl;
+    padding: @spacing-6;
+    margin: @spacing-5;
+    box-shadow: @shadow-xl;
+    border: 1px solid @border-color-light;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(102, 151, 245, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+  }
+
+  &__section-title {
+    font-size: @font-size-xl;
+    color: @text-primary;
+    font-weight: @font-weight-bold;
+    margin-bottom: @spacing-5;
+    display: block;
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -@spacing-1;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: @gradient-primary;
+      border-radius: 2px;
+    }
+  }
+
+  &__subsection-title {
+    font-size: @font-size-lg;
+    color: @text-secondary;
+    font-weight: @font-weight-semibold;
+    margin: @spacing-4 0 @spacing-3 0;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: @spacing-3;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: @spacing-2;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__card-title {
+    font-size: @font-size-lg;
+    color: @text-primary;
+    font-weight: @font-weight-semibold;
+    margin-bottom: @spacing-2;
+    display: block;
+  }
+
+  &__card-content {
+    font-size: @font-size-base;
+    color: @text-secondary;
+    line-height: @line-height-relaxed;
+    display: block;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: @spacing-3;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__animations {
+    display: flex;
+    flex-direction: column;
+    gap: @spacing-3;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__animation-item {
+    padding: @spacing-4;
+    background: @surface-color;
+    border-radius: @radius-md;
+    text-align: center;
+    font-size: @font-size-base;
+    color: @text-primary;
+    font-weight: @font-weight-medium;
+    border: 1px solid @border-color;
+    box-shadow: @shadow-sm;
+  }
+
+  &__utils {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__colors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: @spacing-3;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__color-item {
+    height: 80px;
+    border-radius: @radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: @shadow-md;
+    transition: all @transition-fast;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: @shadow-lg;
+    }
+  }
+
+  &__color-text {
+    color: @surface-color;
+    font-size: @font-size-base;
+    font-weight: @font-weight-semibold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView } from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import JobCard from '../../components/JobCard'
 import FilterBar from '../../components/FilterBar'
+import CustomTabBar from '../../components/CustomTabBar'
 import useJobStore from '../../stores/jobStore'
 import './index.less'
 
@@ -56,7 +58,7 @@ const Home = () => {
   }
 
   return (
-    <View className="home">
+    <View className="home page-with-tabbar">
       {/* 筛选栏 */}
       <FilterBar />
 
@@ -72,8 +74,9 @@ const Home = () => {
           <Text className="home__stats-label">今日新增</Text>
         </View>
         {!loading && (
-          <View className="home__refresh-btn" onClick={handleRefresh}>
-            <Text className="home__refresh-text">🔄 刷新</Text>
+          <View className="arco-btn arco-btn--small arco-btn--outline home__refresh-btn" onClick={handleRefresh}>
+            <AtIcon value="reload" size="14" color="#6697f5" />
+            <Text className="home__refresh-text">刷新</Text>
           </View>
         )}
       </View>
@@ -116,13 +119,15 @@ const Home = () => {
           ) : (
             /* 空状态 */
             <View className="home__empty">
-              <View className="home__empty-icon">🔍</View>
+              <View className="home__empty-icon">
+                <AtIcon value="search" size="48" color="#9ca3af" />
+              </View>
               <Text className="home__empty-title">暂无匹配职位</Text>
               <Text className="home__empty-desc">
                 试试调整筛选条件或搜索其他关键词
               </Text>
-              <View 
-                className="home__empty-btn"
+              <View
+                className="arco-btn arco-btn--medium arco-btn--primary home__empty-btn"
                 onClick={resetFilters}
               >
                 <Text className="home__empty-btn-text">重置筛选</Text>
@@ -131,6 +136,9 @@ const Home = () => {
           )}
         </ScrollView>
       )}
+
+      {/* 自定义TabBar */}
+      <CustomTabBar />
     </View>
   )
 }

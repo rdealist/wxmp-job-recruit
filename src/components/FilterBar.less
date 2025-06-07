@@ -1,77 +1,100 @@
+@import '../app.less';
+
 .filter-bar {
-  background: #ffffff;
-  padding: 20px;
-  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(135deg, @surface-color 0%, @primary-50 100%);
+  padding: @spacing-5;
+  border-bottom: 1px solid @border-color-light;
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(10px);
+  box-shadow: @shadow-sm;
 
   // 搜索框
   &__search {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: @spacing-4;
+    gap: @spacing-3;
   }
 
   &__search-input {
     flex: 1;
     position: relative;
-    margin-right: 12px;
   }
 
   &__input {
     width: 100%;
-    height: 44px;
-    background: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 22px;
-    padding: 0 20px;
-    font-size: 16px;
-    color: #333333;
+    height: 48px;
+    background: @surface-color;
+    border: 2px solid @border-color;
+    border-radius: @radius-full;
+    padding: 0 @spacing-5;
+    font-size: @font-size-base;
+    color: @text-primary;
+    transition: all @transition-fast;
+    box-shadow: @shadow-sm;
 
     &::placeholder {
-      color: #999999;
+      color: @text-tertiary;
     }
 
     &:focus {
-      border-color: #6697f5;
-      background: #ffffff;
+      border-color: @primary-500;
+      background: @surface-color;
+      box-shadow: 0 0 0 4px fade(@primary-500, 10%), @shadow-md;
+      outline: none;
+    }
+
+    &:hover {
+      border-color: @primary-300;
+      box-shadow: @shadow-md;
     }
   }
 
   &__clear {
     position: absolute;
-    right: 16px;
+    right: @spacing-4;
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #cccccc;
+    background: @gray-400;
     border-radius: 50%;
+    transition: all @transition-fast;
+    cursor: pointer;
+
+    &:hover {
+      background: @gray-500;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &:active {
+      transform: translateY(-50%) scale(0.95);
+    }
   }
 
   &__clear-icon {
-    font-size: 14px;
-    color: #ffffff;
+    font-size: @font-size-base;
+    color: @surface-color;
     line-height: 1;
+    font-weight: @font-weight-bold;
   }
 
   &__search-btn {
-    width: 44px;
-    height: 44px;
-    background: #6697f5;
-    border-radius: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // Arco按钮样式会自动应用
+    border-radius: @radius-full !important;
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
   }
 
   &__search-icon {
-    font-size: 18px;
-    color: #ffffff;
+    font-size: @font-size-lg;
+    color: @surface-color;
   }
 
   // 筛选按钮组
@@ -79,94 +102,148 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    gap: @spacing-3;
   }
 
   &__filter-btn {
-    display: flex;
-    align-items: center;
-    padding: 8px 16px;
-    background: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    margin-right: 12px;
-    margin-bottom: 8px;
-    transition: all 0.3s ease;
+    // Arco按钮样式会自动应用
+    border-radius: @radius-full !important;
+
+    // 保留一些自定义样式
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(102, 151, 245, 0.1), transparent);
+      transition: left @transition-base;
+      pointer-events: none;
+    }
+
+    &:hover {
+      &::before {
+        left: 100%;
+      }
+    }
 
     &--active {
-      background: #e6f7ff;
-      border-color: #6697f5;
-      color: #6697f5;
+      &::before {
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      }
     }
   }
 
   &__filter-text {
-    font-size: 14px;
-    color: #333333;
-    margin-right: 4px;
+    font-size: @font-size-sm;
+    color: @text-primary;
+    margin-right: @spacing-1;
+    font-weight: @font-weight-medium;
+    position: relative;
+    z-index: 1;
 
     .filter-bar__filter-btn--active & {
-      color: #6697f5;
+      color: @surface-color;
     }
   }
 
   &__filter-arrow {
-    font-size: 12px;
-    color: #999999;
-    transition: transform 0.3s ease;
+    font-size: @font-size-xs;
+    color: @text-tertiary;
+    transition: all @transition-fast;
+    position: relative;
+    z-index: 1;
 
     .filter-bar__filter-btn--active & {
-      color: #6697f5;
+      color: @surface-color;
       transform: rotate(180deg);
     }
   }
 
   &__reset {
-    padding: 8px 16px;
-    background: #f0f0f0;
-    border-radius: 20px;
+    // Arco按钮样式会自动应用
     margin-left: auto;
+    border-radius: @radius-full !important;
   }
 
   &__reset-text {
-    font-size: 14px;
-    color: #666666;
+    font-size: @font-size-sm;
+    color: @text-secondary;
+    font-weight: @font-weight-medium;
   }
 
   // 活跃筛选条件
   &__active-filters {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid #f0f0f0;
+    margin-top: @spacing-3;
+    padding-top: @spacing-3;
+    border-top: 1px solid @border-color-light;
+    gap: @spacing-2;
+    animation: fadeInUp 0.3s ease-out;
   }
 
   &__active-tag {
     display: flex;
     align-items: center;
-    background: #6697f5;
-    padding: 6px 12px;
-    border-radius: 16px;
-    margin-right: 8px;
-    margin-bottom: 8px;
+    background: @gradient-primary;
+    padding: @spacing-2 @spacing-3;
+    border-radius: @radius-full;
+    box-shadow: @shadow-sm;
+    transition: all @transition-fast;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+      border-radius: @radius-full;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: @shadow-md;
+    }
   }
 
   &__active-tag-text {
-    font-size: 12px;
-    color: #ffffff;
-    margin-right: 6px;
+    font-size: @font-size-xs;
+    color: @surface-color;
+    margin-right: @spacing-2;
+    font-weight: @font-weight-medium;
+    position: relative;
+    z-index: 1;
   }
 
   &__active-tag-close {
-    font-size: 16px;
-    color: #ffffff;
+    font-size: @font-size-sm;
+    color: @surface-color;
     line-height: 1;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
+    transition: all @transition-fast;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
   }
-} 
+}

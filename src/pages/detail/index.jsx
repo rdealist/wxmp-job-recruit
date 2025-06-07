@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Button } from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Taro, { useRouter } from '@tarojs/taro'
 import useJobStore from '../../stores/jobStore'
 import './index.less'
@@ -204,13 +205,15 @@ const Detail = () => {
           </View>
         ) : (
           <View className="detail__locked">
-            <View className="detail__locked-icon">🔒</View>
+            <View className="detail__locked-icon">
+              <AtIcon value="lock" size="40" color="#6697f5" />
+            </View>
             <Text className="detail__locked-title">联系方式已锁定</Text>
             <Text className="detail__locked-desc">
               历史职位需要分享后才能查看完整联系方式
             </Text>
-            <View 
-              className={`detail__share-btn ${sharing ? 'detail__share-btn--loading' : ''}`}
+            <View
+              className={`arco-btn arco-btn--large arco-btn--primary detail__share-btn ${sharing ? 'arco-btn--loading detail__share-btn--loading' : ''}`}
               onClick={handleShare}
             >
               <Text className="detail__share-btn-text">
@@ -224,10 +227,10 @@ const Detail = () => {
       {/* 底部操作栏 */}
       {canView && (
         <View className="detail__actions">
-          <View className="detail__action-btn detail__action-btn--secondary" onClick={handleCopy}>
+          <View className="arco-btn arco-btn--large arco-btn--outline detail__action-btn detail__action-btn--secondary" onClick={handleCopy}>
             <Text className="detail__action-text">复制联系方式</Text>
           </View>
-          <View className="detail__action-btn detail__action-btn--primary" onClick={handleCall}>
+          <View className="arco-btn arco-btn--large arco-btn--primary detail__action-btn detail__action-btn--primary" onClick={handleCall}>
             <Text className="detail__action-text">立即沟通</Text>
           </View>
         </View>
@@ -236,8 +239,8 @@ const Detail = () => {
       {/* 分享按钮（历史职位且未解锁时显示） */}
       {!canView && (
         <View className="detail__bottom-share">
-          <Button 
-            className="detail__share-button"
+          <Button
+            className="arco-btn arco-btn--large arco-btn--primary arco-btn--long detail__share-button"
             openType="share"
             loading={sharing}
             onClick={handleShare}

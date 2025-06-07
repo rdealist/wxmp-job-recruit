@@ -1,0 +1,96 @@
+@import '../app.less';
+
+.custom-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: @white;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  
+  &__border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: @border-color;
+  }
+  
+  &__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    
+    &:active {
+      transform: scale(0.95);
+    }
+    
+    &--active {
+      .custom-tab-bar__icon {
+        transform: scale(1.1);
+      }
+    }
+  }
+  
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+    transition: transform 0.2s ease;
+  }
+  
+  &__text {
+    font-size: 10px;
+    color: @text-color-light;
+    transition: color 0.2s ease;
+    
+    &--active {
+      color: @primary-color;
+      font-weight: 500;
+    }
+  }
+}
+
+// 为页面内容添加底部间距，避免被TabBar遮挡
+.page-with-tabbar {
+  padding-bottom: 50px;
+}
+
+// 响应式适配
+@media (max-width: 375px) {
+  .custom-tab-bar {
+    height: 48px;
+    
+    &__text {
+      font-size: 9px;
+    }
+  }
+  
+  .page-with-tabbar {
+    padding-bottom: 48px;
+  }
+}
+
+// 安全区域适配（iPhone X等）
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .custom-tab-bar {
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(50px + env(safe-area-inset-bottom));
+  }
+  
+  .page-with-tabbar {
+    padding-bottom: calc(50px + env(safe-area-inset-bottom));
+  }
+}

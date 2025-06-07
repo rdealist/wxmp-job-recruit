@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, Input, Textarea, Picker } from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
+import CustomTabBar from '../../components/CustomTabBar'
 import useJobStore from '../../stores/jobStore'
 import './index.less'
 
@@ -242,7 +244,7 @@ const Publish = () => {
   }
 
   return (
-    <View className="publish">
+    <View className="publish page-with-tabbar">
       <View className="publish__header">
         <Text className="publish__title">发布职位</Text>
         <Text className="publish__subtitle">让更多优秀人才发现您的岗位</Text>
@@ -371,7 +373,7 @@ const Publish = () => {
                 onInput={(e) => setTagInput(e.detail.value)}
                 onConfirm={handleAddTag}
               />
-              <View className="publish__tag-add" onClick={handleAddTag}>
+              <View className="arco-btn arco-btn--medium arco-btn--primary publish__tag-add" onClick={handleAddTag}>
                 <Text className="publish__tag-add-text">添加</Text>
               </View>
             </View>
@@ -380,12 +382,12 @@ const Publish = () => {
                 {formData.tags.map((tag, index) => (
                   <View key={index} className="publish__tag">
                     <Text className="publish__tag-text">{tag}</Text>
-                    <Text 
+                    <View
                       className="publish__tag-close"
                       onClick={() => handleRemoveTag(index)}
                     >
-                      ×
-                    </Text>
+                      <AtIcon value="close" size="12" color="#6697f5" />
+                    </View>
                   </View>
                 ))}
               </View>
@@ -475,11 +477,11 @@ const Publish = () => {
 
       {/* 操作按钮 */}
       <View className="publish__actions">
-        <View className="publish__btn publish__btn--secondary" onClick={handleReset}>
+        <View className="arco-btn arco-btn--large arco-btn--outline publish__btn publish__btn--secondary" onClick={handleReset}>
           <Text className="publish__btn-text">重置</Text>
         </View>
-        <View 
-          className={`publish__btn publish__btn--primary ${submitting ? 'publish__btn--disabled' : ''}`}
+        <View
+          className={`arco-btn arco-btn--large arco-btn--primary publish__btn publish__btn--primary ${submitting ? 'arco-btn--loading publish__btn--disabled' : ''}`}
           onClick={handleSubmit}
         >
           <Text className="publish__btn-text">
@@ -487,6 +489,9 @@ const Publish = () => {
           </Text>
         </View>
       </View>
+
+      {/* 自定义TabBar */}
+      <CustomTabBar />
     </View>
   )
 }
