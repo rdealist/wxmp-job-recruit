@@ -1,0 +1,133 @@
+@import '../../../app.less';
+
+.job-description {
+  background: @surface-color;
+  border-radius: @radius-xl;
+  padding: @spacing-6;
+  margin-bottom: @spacing-4;
+  box-shadow: @shadow-md;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: @spacing-4;
+  }
+
+  &__title {
+    font-size: @font-size-lg;
+    font-weight: @font-weight-bold;
+    color: @text-primary;
+  }
+
+  &__toggle {
+    padding: @spacing-2 @spacing-3;
+    background: @surface-secondary;
+    border: 1px solid @border-color;
+    border-radius: @radius-base;
+    font-size: @font-size-sm;
+    color: @text-secondary;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: @primary-50;
+      border-color: @primary-300;
+      color: @primary-600;
+    }
+  }
+
+  &__content {
+    line-height: @line-height-relaxed;
+    color: @text-primary;
+
+    &--collapsed {
+      max-height: 120px;
+      overflow: hidden;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: linear-gradient(transparent, @surface-color);
+        pointer-events: none;
+      }
+    }
+  }
+
+  &__text {
+    font-size: @font-size-base;
+    margin-bottom: @spacing-3;
+    white-space: pre-wrap;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__section {
+    margin-bottom: @spacing-4;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__section-title {
+    font-size: @font-size-base;
+    font-weight: @font-weight-semibold;
+    color: @text-primary;
+    margin-bottom: @spacing-2;
+    padding-bottom: @spacing-1;
+    border-bottom: 1px solid @border-color;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__list-item {
+    position: relative;
+    padding-left: @spacing-4;
+    margin-bottom: @spacing-1;
+    font-size: @font-size-base;
+    color: @text-primary;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: @primary-500;
+      font-weight: bold;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__highlight {
+    background: @primary-50;
+    color: @primary-700;
+    padding: @spacing-1 @spacing-2;
+    border-radius: @radius-sm;
+    font-weight: @font-weight-medium;
+  }
+
+  &__link {
+    color: @primary-600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-bottom-color: @primary-600;
+    }
+  }
+}

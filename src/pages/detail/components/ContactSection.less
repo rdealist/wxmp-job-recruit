@@ -1,0 +1,123 @@
+@import '../../../app.less';
+
+.contact-section {
+  background: @surface-color;
+  border-radius: @radius-xl;
+  padding: @spacing-6;
+  margin-bottom: @spacing-4;
+  box-shadow: @shadow-md;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: @spacing-4;
+  }
+
+  &__title {
+    font-size: @font-size-lg;
+    font-weight: @font-weight-bold;
+    color: @text-primary;
+  }
+
+  &__unlock-btn {
+    padding: @spacing-2 @spacing-4;
+    background: @gradient-primary;
+    color: @surface-color;
+    border: none;
+    border-radius: @radius-base;
+    font-size: @font-size-sm;
+    font-weight: @font-weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: @shadow-md;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: @spacing-3;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: @spacing-3;
+    background: @surface-secondary;
+    border-radius: @radius-base;
+    border: 1px solid @border-color;
+  }
+
+  &__label {
+    font-size: @font-size-sm;
+    color: @text-secondary;
+    margin-bottom: @spacing-1;
+  }
+
+  &__value {
+    font-size: @font-size-base;
+    font-weight: @font-weight-medium;
+    color: @text-primary;
+    flex: 1;
+
+    &--masked {
+      color: @text-tertiary;
+      font-family: monospace;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: @spacing-2;
+  }
+
+  &__action-btn {
+    padding: @spacing-2;
+    background: @surface-color;
+    border: 1px solid @border-color;
+    border-radius: @radius-base;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: @primary-50;
+      border-color: @primary-300;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    color: @text-secondary;
+  }
+
+  &__locked-message {
+    text-align: center;
+    padding: @spacing-6;
+    color: @text-secondary;
+    font-size: @font-size-sm;
+    line-height: @line-height-relaxed;
+  }
+
+  &__unlock-hint {
+    margin-top: @spacing-2;
+    font-size: @font-size-xs;
+    color: @text-tertiary;
+  }
+}
