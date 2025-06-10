@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
@@ -6,38 +6,38 @@ import CustomTabBar from '../../components/CustomTabBar'
 import useJobStore from '../../stores/jobStore'
 import './index.less'
 
-const User = () => {
+const User = memo(() => {
   const { userInfo, getUserJobs } = useJobStore()
-  const myJobs = getUserJobs()
+  const myJobs = useMemo(() => getUserJobs(), [getUserJobs])
 
   // 跳转到我的发布
-  const handleMyJobs = () => {
+  const handleMyJobs = useCallback(() => {
     Taro.showToast({
       title: '功能开发中',
       icon: 'none'
     })
-  }
+  }, [])
 
   // 联系客服
-  const handleContact = () => {
+  const handleContact = useCallback(() => {
     Taro.showModal({
       title: '联系客服',
       content: '如有问题请联系客服微信：jobservice',
       showCancel: false
     })
-  }
+  }, [])
 
   // 关于我们
-  const handleAbout = () => {
+  const handleAbout = useCallback(() => {
     Taro.showModal({
       title: '关于工程招聘',
       content: '专业的工程行业招聘平台，致力于连接优秀人才与企业',
       showCancel: false
     })
-  }
+  }, [])
 
   // 设置
-  const handleSettings = () => {
+  const handleSettings = useCallback(() => {
     Taro.showActionSheet({
       itemList: ['清除缓存', '意见反馈', '隐私政策'],
       success: (res) => {
@@ -67,7 +67,7 @@ const User = () => {
         }
       }
     })
-  }
+  }, [])
 
   return (
     <View className="user page-with-tabbar">
@@ -164,6 +164,9 @@ const User = () => {
       <CustomTabBar />
     </View>
   )
-}
+})
 
-export default User 
+// 设置displayName以便调试
+User.displayName = 'User'
+
+export default User

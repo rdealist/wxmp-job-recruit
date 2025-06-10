@@ -5,7 +5,7 @@
  * @created 2024-12-05
  */
 
-import React, { useState } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import { maskContact, makePhoneCall, copyContact } from '../utils/detailUtils'
@@ -19,7 +19,7 @@ import './ContactSection.less'
  * @param {Function} props.onUnlock - 解锁联系方式的回调函数
  * @returns {React.ReactElement} 联系信息组件
  */
-const ContactSection = ({ job, isUnlocked, onUnlock }) => {
+const ContactSection = memo(({ job, isUnlocked, onUnlock }) => {
   const [isRevealing, setIsRevealing] = useState(false)
 
   if (!job) {
@@ -35,32 +35,32 @@ const ContactSection = ({ job, isUnlocked, onUnlock }) => {
   /**
    * 处理解锁联系方式
    */
-  const handleUnlock = async () => {
+  const handleUnlock = useCallback(async () => {
     if (isRevealing) return
-    
+
     setIsRevealing(true)
     try {
       await onUnlock()
     } finally {
       setIsRevealing(false)
     }
-  }
+  }, [isRevealing, onUnlock])
 
   /**
    * 处理拨打电话
    */
-  const handleCall = () => {
+  const handleCall = useCallback(() => {
     if (!isUnlocked || !job.contact) return
     makePhoneCall(job.contact, job.contactName)
-  }
+  }, [isUnlocked, job.contact, job.contactName])
 
   /**
    * 处理复制联系方式
    */
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     if (!isUnlocked || !job.contact) return
     copyContact(job.contact, '联系电话')
-  }
+  }, [isUnlocked, job.contact])
 
   return (
     <View className="contact-section">
@@ -169,6 +169,9 @@ const ContactSection = ({ job, isUnlocked, onUnlock }) => {
       </View>
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+ContactSection.displayName = 'ContactSection'
 
 export default ContactSection

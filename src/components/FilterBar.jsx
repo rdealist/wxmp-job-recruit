@@ -1,30 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, memo, useCallback, useMemo } from 'react'
 import { View, Text, Input } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import useJobStore from '../stores/jobStore'
 import './FilterBar.less'
 
-const FilterBar = () => {
+const FilterBar = memo(() => {
   const { filters, locations, setFilters, resetFilters } = useJobStore()
   const [searchValue, setSearchValue] = useState(filters.keyword)
 
   // 处理搜索输入
-  const handleSearchInput = (e) => {
+  const handleSearchInput = useCallback((e) => {
     const value = e.detail.value
     setSearchValue(value)
-  }
+  }, [])
 
   // 处理搜索确认
-  const handleSearchConfirm = () => {
+  const handleSearchConfirm = useCallback(() => {
     setFilters({ keyword: searchValue })
-  }
+  }, [searchValue, setFilters])
 
   // 处理搜索清空
-  const handleSearchClear = () => {
+  const handleSearchClear = useCallback(() => {
     setSearchValue('')
     setFilters({ keyword: '' })
-  }
+  }, [setFilters])
 
   // 显示地区选择器
   const handleLocationSelect = () => {
@@ -62,22 +62,25 @@ const FilterBar = () => {
   }
 
   // 获取当前位置显示文本
-  const getLocationText = () => {
+  const getLocationText = useMemo(() => {
     if (!filters.location) return '选择地区'
     if (filters.district) {
       return `${filters.location} ${filters.district}`
     }
     return filters.location
-  }
+  }, [filters.location, filters.district])
 
   // 重置所有筛选
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setSearchValue('')
     resetFilters()
-  }
+  }, [resetFilters])
 
   // 检查是否有活跃的筛选条件
-  const hasActiveFilters = filters.location || filters.keyword
+  const hasActiveFilters = useMemo(() =>
+    filters.location || filters.keyword,
+    [filters.location, filters.keyword]
+  )
 
   return (
     <View className="filter-bar">
@@ -111,7 +114,7 @@ const FilterBar = () => {
           onClick={handleLocationSelect}
         >
           <Text className="filter-bar__filter-text">
-            {getLocationText()}
+            {getLocationText}
           </Text>
           <AtIcon value="chevron-down" size="14" color={filters.location ? "#ffffff" : "#6697f5"} />
         </View>
@@ -130,7 +133,7 @@ const FilterBar = () => {
           {filters.location && (
             <View className="filter-bar__active-tag">
               <Text className="filter-bar__active-tag-text">
-                {getLocationText()}
+                {getLocationText}
               </Text>
               <View
                 className="filter-bar__active-tag-close"
@@ -157,6 +160,9 @@ const FilterBar = () => {
       )}
     </View>
   )
-}
+})
 
-export default FilterBar 
+// 设置displayName以便调试
+FilterBar.displayName = 'FilterBar'
+
+export default FilterBar

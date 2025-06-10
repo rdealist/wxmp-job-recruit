@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo, useCallback, useMemo } from 'react'
 import { View, Text, ScrollView } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
@@ -8,7 +8,7 @@ import CustomTabBar from '../../components/CustomTabBar'
 import useJobStore from '../../stores/jobStore'
 import './index.less'
 
-const Home = () => {
+const Home = memo(() => {
   const { 
     filteredJobs, 
     getTodayJobs, 
@@ -49,17 +49,17 @@ const Home = () => {
   // 页面初始化时应用筛选（仅执行一次）
   useEffect(() => {
     applyFilters()
-  }, []) // 空依赖数组，仅在组件挂载时执行一次
+  }, [applyFilters]) // 添加applyFilters到依赖数组
 
   // 获取今日职位数量
-  const todayJobsCount = getTodayJobs().length
+  const todayJobsCount = useMemo(() => getTodayJobs().length, [getTodayJobs])
 
   // 手动刷新
-  const handleRefresh = async () => {
+  const handleRefresh = useCallback(async () => {
     setLoading(true)
     await refreshJobs()
     setLoading(false)
-  }
+  }, [refreshJobs])
 
   return (
     <View className="home page-with-tabbar">
@@ -145,6 +145,9 @@ const Home = () => {
       <CustomTabBar />
     </View>
   )
-}
+})
 
-export default Home 
+// 设置displayName以便调试
+Home.displayName = 'Home'
+
+export default Home

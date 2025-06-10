@@ -5,7 +5,7 @@
  * @created 2024-12-05
  */
 
-import React from 'react'
+import React, { memo, useMemo } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import './LoadingSpinner.less'
@@ -20,7 +20,7 @@ import './LoadingSpinner.less'
  * @param {string} props.className - 自定义样式类名
  * @returns {React.ReactElement} 加载组件
  */
-const LoadingSpinner = ({
+const LoadingSpinner = memo(({
   text = '加载中...',
   size = 'medium',
   type = 'spinner',
@@ -68,13 +68,13 @@ const LoadingSpinner = ({
     }
   }
 
-  const containerClass = [
+  const containerClass = useMemo(() => [
     'loading-spinner',
     `loading-spinner--${size}`,
     `loading-spinner--${type}`,
     overlay ? 'loading-spinner--overlay' : '',
     className
-  ].filter(Boolean).join(' ')
+  ].filter(Boolean).join(' '), [size, type, overlay, className])
 
   return (
     <View className={containerClass}>
@@ -86,6 +86,9 @@ const LoadingSpinner = ({
       </View>
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+LoadingSpinner.displayName = 'LoadingSpinner'
 
 export default LoadingSpinner

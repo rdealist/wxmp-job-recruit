@@ -5,7 +5,7 @@
  * @created 2024-12-05
  */
 
-import React from 'react'
+import React, { memo, useMemo } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import './EmptyState.less'
@@ -22,7 +22,7 @@ import './EmptyState.less'
  * @param {string} props.className - 自定义样式类名
  * @returns {React.ReactElement} 空状态组件
  */
-const EmptyState = ({
+const EmptyState = memo(({
   type = 'no-data',
   title,
   description,
@@ -66,17 +66,17 @@ const EmptyState = ({
     return configs[type] || configs['no-data']
   }
 
-  const defaultConfig = getDefaultConfig()
+  const defaultConfig = useMemo(() => getDefaultConfig(), [type])
   const finalIcon = icon || defaultConfig.icon
   const finalIconColor = iconColor || defaultConfig.iconColor
   const finalTitle = title || defaultConfig.title
   const finalDescription = description || defaultConfig.description
 
-  const containerClass = [
+  const containerClass = useMemo(() => [
     'empty-state',
     `empty-state--${type}`,
     className
-  ].filter(Boolean).join(' ')
+  ].filter(Boolean).join(' '), [type, className])
 
   return (
     <View className={containerClass}>
@@ -107,6 +107,9 @@ const EmptyState = ({
       </View>
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+EmptyState.displayName = 'EmptyState'
 
 export default EmptyState

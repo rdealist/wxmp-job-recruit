@@ -165,7 +165,7 @@ const Detail = () => {
  * @description 配置分享给朋友时的内容
  * @returns {Object} 分享配置对象
  */
-Detail.onShareAppMessage = () => {
+const onShareAppMessage = () => {
   try {
     const pages = Taro.getCurrentPages()
     const currentPage = pages[pages.length - 1]
@@ -178,10 +178,12 @@ Detail.onShareAppMessage = () => {
       }
     }
 
-    const { getJobById } = useJobStore.getState()
-    const job = getJobById(id)
-
-    return generateShareContent(job)
+    // 注意：在分享回调中无法使用Hook，需要直接获取数据
+    // 这里需要从全局状态或其他方式获取数据
+    return {
+      title: '工程招聘职位分享',
+      path: `/pages/detail/index?id=${id}`
+    }
   } catch (error) {
     console.error('分享配置失败:', error)
     return {
@@ -196,7 +198,7 @@ Detail.onShareAppMessage = () => {
  * @description 配置分享到朋友圈时的内容
  * @returns {Object} 分享配置对象
  */
-Detail.onShareTimeline = () => {
+const onShareTimeline = () => {
   try {
     const pages = Taro.getCurrentPages()
     const currentPage = pages[pages.length - 1]
@@ -209,14 +211,9 @@ Detail.onShareTimeline = () => {
       }
     }
 
-    const { getJobById } = useJobStore.getState()
-    const job = getJobById(id)
-
-    const shareContent = generateShareContent(job)
     return {
-      title: job ? `${job.title} - ${job.company} 招聘中` : '优质工程职位推荐',
-      query: `id=${id}`,
-      imageUrl: shareContent.imageUrl || ''
+      title: '优质工程职位推荐',
+      query: `id=${id}`
     }
   } catch (error) {
     console.error('朋友圈分享配置失败:', error)
@@ -226,5 +223,9 @@ Detail.onShareTimeline = () => {
     }
   }
 }
+
+// 为函数组件添加分享方法
+Detail.onShareAppMessage = onShareAppMessage
+Detail.onShareTimeline = onShareTimeline
 
 export default Detail 

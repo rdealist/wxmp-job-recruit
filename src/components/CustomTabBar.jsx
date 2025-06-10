@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect, memo, useCallback, useMemo } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import './CustomTabBar.less'
 
-const CustomTabBar = () => {
-  const [selected, setSelected] = React.useState(0)
-  
-  const tabList = [
+const CustomTabBar = memo(() => {
+  const [selected, setSelected] = useState(0)
+
+  const tabList = useMemo(() => [
     {
       pagePath: '/pages/home/index',
       text: '招聘',
@@ -15,39 +15,39 @@ const CustomTabBar = () => {
       title: '招聘'
     },
     {
-      pagePath: '/pages/publish/index', 
+      pagePath: '/pages/publish/index',
       text: '发布',
       iconType: 'add-circle',
       title: '发布'
     },
     {
       pagePath: '/pages/user/index',
-      text: '我的', 
+      text: '我的',
       iconType: 'user',
       title: '我的'
     }
-  ]
+  ], [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     // 获取当前页面路径
     const pages = Taro.getCurrentPages()
     const currentPage = pages[pages.length - 1]
     const currentRoute = currentPage.route
-    
+
     // 根据当前路径设置选中状态
-    const currentIndex = tabList.findIndex(item => 
+    const currentIndex = tabList.findIndex(item =>
       item.pagePath.includes(currentRoute.split('/').pop())
     )
     if (currentIndex !== -1) {
       setSelected(currentIndex)
     }
-  }, [])
+  }, [tabList])
 
-  const switchTab = (index) => {
+  const switchTab = useCallback((index) => {
     const url = tabList[index].pagePath
     setSelected(index)
     Taro.switchTab({ url })
-  }
+  }, [tabList])
 
   return (
     <View className="custom-tab-bar">
@@ -72,6 +72,9 @@ const CustomTabBar = () => {
       ))}
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+CustomTabBar.displayName = 'CustomTabBar'
 
 export default CustomTabBar

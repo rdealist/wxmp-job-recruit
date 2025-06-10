@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { memo, useCallback } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import useJobStore from '../stores/jobStore'
 import './JobCard.less'
 
-const JobCard = ({ job, showLockStatus = true }) => {
+const JobCard = memo(({ job, showLockStatus = true }) => {
   const { isDateUnlocked } = useJobStore()
   const isUnlocked = isDateUnlocked(job.publishDate)
   const isToday = job.publishDate === new Date().toDateString()
@@ -33,7 +33,7 @@ const JobCard = ({ job, showLockStatus = true }) => {
   }
 
   // 点击卡片跳转详情
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
     if (!isUnlocked && !isToday && showLockStatus) {
       Taro.showModal({
         title: '内容已锁定',
@@ -52,7 +52,7 @@ const JobCard = ({ job, showLockStatus = true }) => {
         url: `/pages/detail/index?id=${job.id}`
       })
     }
-  }
+  }, [isUnlocked, isToday, showLockStatus, job.id])
 
   return (
     <View className="job-card" onClick={handleCardClick}>
@@ -130,6 +130,9 @@ const JobCard = ({ job, showLockStatus = true }) => {
       )}
     </View>
   )
-}
+})
 
-export default JobCard 
+// 设置displayName以便调试
+JobCard.displayName = 'JobCard'
+
+export default JobCard

@@ -5,7 +5,7 @@
  * @created 2024-12-05
  */
 
-import React from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 import { View, Text, Input, Picker } from '@tarojs/components'
 import { salaryRangeOptions } from '../constants/formOptions'
 import { hasFieldError, getFieldError } from '../utils/formValidation'
@@ -21,7 +21,7 @@ import './BasicInfoForm.less'
  * @param {Object} props.locations - 地区数据
  * @returns {React.ReactElement} 基本信息表单组件
  */
-const BasicInfoForm = ({
+const BasicInfoForm = memo(({
   formData,
   errors,
   onInputChange,
@@ -29,47 +29,50 @@ const BasicInfoForm = ({
   locations
 }) => {
   // 获取城市列表
-  const cityList = Object.keys(locations)
-  
+  const cityList = useMemo(() => Object.keys(locations), [locations])
+
   // 获取当前城市的区县列表
-  const districtList = formData.location ? locations[formData.location] || [] : []
+  const districtList = useMemo(() =>
+    formData.location ? locations[formData.location] || [] : [],
+    [formData.location, locations]
+  )
 
   /**
    * 处理城市选择变化
    * @param {Object} e - 事件对象
    */
-  const handleCityChange = (e) => {
+  const handleCityChange = useCallback((e) => {
     const selectedIndex = e.detail.value
     const selectedCity = cityList[selectedIndex]
-    
+
     onPickerChange('location', selectedCity)
     // 清空区县选择
     if (formData.district) {
       onPickerChange('district', '')
     }
-  }
+  }, [cityList, onPickerChange, formData.district])
 
   /**
    * 处理区县选择变化
    * @param {Object} e - 事件对象
    */
-  const handleDistrictChange = (e) => {
+  const handleDistrictChange = useCallback((e) => {
     const selectedIndex = e.detail.value
     const selectedDistrict = districtList[selectedIndex]
-    
+
     onPickerChange('district', selectedDistrict)
-  }
+  }, [districtList, onPickerChange])
 
   /**
    * 处理薪资快速选择
    * @param {Object} e - 事件对象
    */
-  const handleSalaryQuickSelect = (e) => {
+  const handleSalaryQuickSelect = useCallback((e) => {
     const selectedIndex = e.detail.value
     const selectedSalary = salaryRangeOptions[selectedIndex]
-    
+
     onInputChange('salary', selectedSalary)
-  }
+  }, [onInputChange])
 
   return (
     <View className="basic-info-form">
@@ -198,6 +201,9 @@ const BasicInfoForm = ({
       </View>
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+BasicInfoForm.displayName = 'BasicInfoForm'
 
 export default BasicInfoForm

@@ -5,7 +5,7 @@
  * @created 2024-12-05
  */
 
-import React, { useState } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 import { View, Text, Button } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import Taro from '@tarojs/taro'
@@ -20,7 +20,7 @@ import './ActionButtons.less'
  * @param {boolean} props.isUnlocked - 是否已解锁联系方式
  * @returns {React.ReactElement} 操作按钮组件
  */
-const ActionButtons = ({ job, onShare, isUnlocked }) => {
+const ActionButtons = memo(({ job, onShare, isUnlocked }) => {
   const [isSharing, setIsSharing] = useState(false)
   const [isFavorited, setIsFavorited] = useState(false)
 
@@ -31,9 +31,9 @@ const ActionButtons = ({ job, onShare, isUnlocked }) => {
   /**
    * 处理分享操作
    */
-  const handleShare = async () => {
+  const handleShare = useCallback(async () => {
     if (isSharing) return
-    
+
     setIsSharing(true)
     try {
       const success = await onShare()
@@ -52,7 +52,7 @@ const ActionButtons = ({ job, onShare, isUnlocked }) => {
     } finally {
       setIsSharing(false)
     }
-  }
+  }, [isSharing, onShare])
 
   /**
    * 处理收藏操作

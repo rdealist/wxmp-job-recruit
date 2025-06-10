@@ -5,7 +5,7 @@
  * @created 2024-12-05
  */
 
-import React from 'react'
+import React, { memo, useMemo } from 'react'
 import { View, Text } from '@tarojs/components'
 import { formatTime, getJobStatusTags } from '../utils/detailUtils'
 import './JobHeader.less'
@@ -16,7 +16,7 @@ import './JobHeader.less'
  * @param {Object} props.job - 职位数据对象
  * @returns {React.ReactElement} 职位头部组件
  */
-const JobHeader = ({ job }) => {
+const JobHeader = memo(({ job }) => {
   if (!job) {
     return (
       <View className="job-header">
@@ -28,7 +28,7 @@ const JobHeader = ({ job }) => {
   }
 
   // 获取职位状态标签
-  const statusTags = getJobStatusTags(job)
+  const statusTags = useMemo(() => getJobStatusTags(job), [job])
 
   return (
     <View className="job-header">
@@ -97,6 +97,9 @@ const JobHeader = ({ job }) => {
       )}
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+JobHeader.displayName = 'JobHeader'
 
 export default JobHeader
