@@ -57,19 +57,19 @@ const ActionButtons = memo(({ job, onShare, isUnlocked }) => {
   /**
    * 处理收藏操作
    */
-  const handleFavorite = () => {
+  const handleFavorite = useCallback(() => {
     // 这里可以实现收藏功能
     setIsFavorited(!isFavorited)
     Taro.showToast({
       title: isFavorited ? '已取消收藏' : '已收藏',
       icon: 'success'
     })
-  }
+  }, [isFavorited])
 
   /**
    * 处理投递简历
    */
-  const handleApply = () => {
+  const handleApply = useCallback(() => {
     if (!isUnlocked) {
       Taro.showToast({
         title: '请先解锁联系方式',
@@ -91,18 +91,18 @@ const ActionButtons = memo(({ job, onShare, isUnlocked }) => {
         }
       }
     })
-  }
+  }, [isUnlocked])
 
   /**
    * 处理举报操作
    */
-  const handleReport = () => {
+  const handleReport = useCallback(() => {
     Taro.showActionSheet({
       itemList: ['虚假信息', '重复发布', '联系方式错误', '其他问题'],
       success: (res) => {
         const reasons = ['虚假信息', '重复发布', '联系方式错误', '其他问题']
         const reason = reasons[res.tapIndex]
-        
+
         Taro.showModal({
           title: '举报确认',
           content: `确认举报该职位存在"${reason}"问题吗？`,
@@ -118,16 +118,16 @@ const ActionButtons = memo(({ job, onShare, isUnlocked }) => {
         })
       }
     })
-  }
+  }, [])
 
   /**
    * 处理返回首页
    */
-  const handleBackHome = () => {
+  const handleBackHome = useCallback(() => {
     Taro.switchTab({
       url: '/pages/home/index'
     })
-  }
+  }, [])
 
   return (
     <View className="action-buttons">
@@ -211,6 +211,9 @@ const ActionButtons = memo(({ job, onShare, isUnlocked }) => {
       )}
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+ActionButtons.displayName = 'ActionButtons'
 
 export default ActionButtons

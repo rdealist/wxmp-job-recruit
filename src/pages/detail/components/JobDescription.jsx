@@ -5,7 +5,7 @@
  * @created 2024-12-05
  */
 
-import React, { useState } from 'react'
+import React, { useState, memo, useCallback, useMemo } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import './JobDescription.less'
@@ -16,7 +16,7 @@ import './JobDescription.less'
  * @param {Object} props.job - 职位数据对象
  * @returns {React.ReactElement} 职位描述组件
  */
-const JobDescription = ({ job }) => {
+const JobDescription = memo(({ job }) => {
   const [expandedSections, setExpandedSections] = useState({
     description: false,
     requirements: false,
@@ -37,12 +37,12 @@ const JobDescription = ({ job }) => {
    * 切换展开/收起状态
    * @param {string} section - 要切换的部分
    */
-  const toggleExpanded = (section) => {
+  const toggleExpanded = useCallback((section) => {
     setExpandedSections(prev => ({
       ...prev,
       [section]: !prev[section]
     }))
-  }
+  }, [])
 
   /**
    * 判断文本是否需要展开功能
@@ -50,9 +50,9 @@ const JobDescription = ({ job }) => {
    * @param {number} maxLength - 最大显示长度
    * @returns {boolean} 是否需要展开功能
    */
-  const needsExpansion = (text, maxLength = 100) => {
+  const needsExpansion = useCallback((text, maxLength = 100) => {
     return text && text.length > maxLength
-  }
+  }, [])
 
   /**
    * 获取显示的文本内容
@@ -61,11 +61,11 @@ const JobDescription = ({ job }) => {
    * @param {number} maxLength - 最大显示长度
    * @returns {string} 处理后的文本
    */
-  const getDisplayText = (text, isExpanded, maxLength = 100) => {
+  const getDisplayText = useCallback((text, isExpanded, maxLength = 100) => {
     if (!text) return ''
     if (isExpanded || text.length <= maxLength) return text
     return text.substring(0, maxLength) + '...'
-  }
+  }, [])
 
   return (
     <View className="job-description">
@@ -159,6 +159,9 @@ const JobDescription = ({ job }) => {
       )}
     </View>
   )
-}
+})
+
+// 设置displayName以便调试
+JobDescription.displayName = 'JobDescription'
 
 export default JobDescription
